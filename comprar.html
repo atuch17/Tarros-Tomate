@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comprar salsa de tomate casera | Los Tomates de Encarna</title>
+  <meta name="description" content="Compra salsa de tomate casera tradicional de Los Tomates de Encarna: tarro suelto o packs de 3 y 6. Haz tu pedido por WhatsApp en un minuto.">
+  <meta name="theme-color" content="#A63B25">
+  <link rel="canonical" href="https://TU-USUARIO.github.io/TU-REPO/comprar.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="Los Tomates de Encarna">
+  <meta property="og:title" content="Comprar salsa de tomate casera | Los Tomates de Encarna">
+  <meta property="og:description" content="Compra salsa de tomate casera tradicional de Los Tomates de Encarna: tarro suelto o packs de 3 y 6. Haz tu pedido por WhatsApp en un minuto.">
+  <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPO/comprar.html">
+  <meta property="og:image" content="https://TU-USUARIO.github.io/TU-REPO/img/tomate.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍅%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Pacifico&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <img class="decor decor-tl" src="img/decor_planta.webp" alt="" aria-hidden="true" width="499" height="742" decoding="async">
+  <img class="decor decor-tr" src="img/decor_planta.webp" alt="" aria-hidden="true" width="499" height="742" decoding="async">
+  <img class="decor decor-bl" src="img/decor_tomates.webp" alt="" aria-hidden="true" width="849" height="544" decoding="async">
+  <img class="decor decor-br" src="img/decor_tomate_corte.webp" alt="" aria-hidden="true" width="475" height="594" decoding="async">
+
+  <div class="wrap">
+  <nav class="nav" aria-label="Menú principal">
+    <a href="index.html">Inicio</a>
+    <a href="ingredientes.html">Ingredientes</a>
+    <a href="comprar.html" aria-current="page">Comprar</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+
+    <main class="panel">
+      <h1>Comprar</h1>
+      <p class="sub">Elige cuántos quieres, escribe tus datos y haz el pedido por WhatsApp. Nada más.</p>
+
+      <section class="productos" aria-label="Formatos disponibles">
+        <article class="prod" data-nombre="1 tarro" data-precio="5.50">
+          <div class="emoji" aria-hidden="true">🫙</div>
+          <h2>1 tarro</h2>
+          <p>Salsa de tomate casera tradicional.</p>
+          <div class="precio">5,50 €</div>
+          <div class="etiqueta">Unidades</div>
+          <div class="qty" role="group" aria-label="Unidades de 1 tarro">
+            <button type="button" data-delta="-1" aria-label="Quitar una unidad de 1 tarro">−</button>
+            <span class="qty-val" aria-live="polite">0</span>
+            <button type="button" data-delta="1" aria-label="Añadir una unidad de 1 tarro">+</button>
+          </div>
+        </article>
+        <article class="prod" data-nombre="Pack 3 tarros" data-precio="15.00">
+          <div class="emoji" aria-hidden="true">🍅</div>
+          <h2>Pack 3 tarros</h2>
+          <p>Tres tarros para tener siempre a mano.</p>
+          <div class="precio">15,00 €</div>
+          <div class="etiqueta">Unidades</div>
+          <div class="qty" role="group" aria-label="Unidades de Pack 3 tarros">
+            <button type="button" data-delta="-1" aria-label="Quitar una unidad de Pack 3 tarros">−</button>
+            <span class="qty-val" aria-live="polite">0</span>
+            <button type="button" data-delta="1" aria-label="Añadir una unidad de Pack 3 tarros">+</button>
+          </div>
+        </article>
+        <article class="prod" data-nombre="Pack 6 tarros" data-precio="28.00">
+          <div class="emoji" aria-hidden="true">🧺</div>
+          <h2>Pack 6 tarros</h2>
+          <p>La despensa llena, o un buen regalo.</p>
+          <div class="precio">28,00 €</div>
+          <div class="etiqueta">Unidades</div>
+          <div class="qty" role="group" aria-label="Unidades de Pack 6 tarros">
+            <button type="button" data-delta="-1" aria-label="Quitar una unidad de Pack 6 tarros">−</button>
+            <span class="qty-val" aria-live="polite">0</span>
+            <button type="button" data-delta="1" aria-label="Añadir una unidad de Pack 6 tarros">+</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="resumen" id="resumen" aria-live="polite" aria-label="Resumen del pedido"></section>
+
+      <form class="form" id="pedido" hidden novalidate>
+        <label class="solo-lectores" for="nombre">Nombre y apellidos</label>
+        <input id="nombre" name="nombre" type="text" placeholder="Nombre y apellidos" autocomplete="name" maxlength="80" required>
+        <label class="solo-lectores" for="direccion">Dirección de entrega</label>
+        <input id="direccion" name="direccion" type="text" placeholder="Dirección de entrega" autocomplete="street-address" maxlength="200" required>
+        <p class="error" id="error-pedido" role="alert"></p>
+        <button class="btn btn-whatsapp" type="submit">💬 Hacer pedido por WhatsApp</button>
+        <p class="nota" data-pago></p>
+      </form>
+      <div class="aviso" id="aviso-pedido" hidden role="status"></div>
+    </main>
+
+    <footer class="footer">Hecho con amor por Encarna</footer>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

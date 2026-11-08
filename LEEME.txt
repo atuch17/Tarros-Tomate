@@ -1,0 +1,40 @@
+LOS TOMATES DE ENCARNA - WEB ESTATICA (para GitHub Pages)
+==========================================================
+
+CARPETAS
+  index.html, ingredientes.html, comprar.html, contacto.html, 404.html
+  css/style.css   -> colores, tamanos y diseno
+  js/config.js    -> TU NUMERO DE WHATSAPP (lo unico que hay que cambiar)
+  js/main.js      -> el carrito y el pedido por WhatsApp
+  img/            -> imagenes
+  sitemap.xml, robots.txt -> para Google
+
+ANTES DE NADA: PON TUS FOTOS en la carpeta img/ con estos nombres exactos:
+  img/tomate.jpg   (foto del tarro con tomates)
+  img/abuela.jpg   (foto de Encarna)
+Consejo de velocidad: que tomate.jpg pese menos de 200 KB (unos 1000 px de ancho)
+y abuela.jpg menos de 60 KB (unos 420 px de ancho).
+
+COMO PROBARLO EN TU ORDENADOR
+  Opcion rapida: doble clic en index.html.
+  Opcion mejor (se comporta como GitHub Pages): abre una terminal EN ESTA CARPETA y escribe
+      py -m http.server 8000
+  y abre en el navegador:  http://localhost:8000
+  (para parar: Ctrl + C en la terminal)
+
+  Para verlo en tu movil (mismo wifi): en el PC escribe "ipconfig", mira tu "Direccion IPv4"
+  (por ejemplo 192.168.1.35) y en el movil abre  http://192.168.1.35:8000
+
+QUE CAMBIAR ANTES DE PUBLICAR
+  1) js/config.js: pon el WhatsApp real de Encarna (con 34 delante, sin + ni espacios).
+  2) Busca y reemplaza en TODOS los archivos (en VS Code: Ctrl+Mayus+H):
+        https://TU-USUARIO.github.io/TU-REPO/
+     por tu direccion real, por ejemplo https://maria.github.io/tomates/
+  3) Precios: en comprar.html (data-precio="5.50" y el texto 5,50 EUR) y en index.html (bloque
+     "offers" del final del <head>).
+  4) Ingredientes y textos: editalos directamente en los .html.
+
+PUBLICAR EN GITHUB PAGES
+  1) Crea un repositorio en GitHub y sube TODO el contenido de esta carpeta.
+  2) Settings -> Pages -> "Deploy from a branch" -> rama main, carpeta / (root) -> Save.
+  3) En un par de minutos tendras la web en https://TU-USUARIO.github.io/TU-REPO/
