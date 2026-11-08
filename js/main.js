@@ -19,30 +19,33 @@
   }
 
   /* ---- Datos del config en la pagina ---- */
-  document.querySelectorAll("[data-telefono]").forEach(function (el) {
-    el.textContent = CFG.telefonoVisible || "";
-    if (el.tagName === "A") el.href = "tel:+" + (CFG.whatsapp || "");
-  });
-  document.querySelectorAll("[data-whatsapp-link]").forEach(function (el) {
-    el.href = enlaceWhatsApp("Hola Encarna 👋 Quería preguntarte una cosa.");
-  });
-  document.querySelectorAll("[data-pago]").forEach(function (el) {
-    el.textContent = CFG.pago || "";
-  });
+  function hidratarConfig() {
+    document.querySelectorAll("[data-telefono]").forEach(function (el) {
+      el.textContent = CFG.telefonoVisible || "";
+      if (el.tagName === "A") el.href = "tel:+" + (CFG.whatsapp || "");
+    });
+    document.querySelectorAll("[data-whatsapp-link]").forEach(function (el) {
+      el.href = enlaceWhatsApp("Hola Encarna 👋 Quería preguntarte una cosa.");
+    });
+    document.querySelectorAll("[data-pago]").forEach(function (el) {
+      el.textContent = CFG.pago || "";
+    });
+  }
 
   /* ---- PAGINA COMPRAR ---- */
-  var productos = Array.prototype.slice.call(document.querySelectorAll(".prod")).map(function (el) {
-    return {
-      nombre: el.getAttribute("data-nombre"),
-      precio: parseFloat(el.getAttribute("data-precio")),
-      qty: 0,
-      valor: el.querySelector(".qty-val"),
-      el: el
-    };
-  });
-  var formPedido = document.getElementById("pedido");
+  function iniciarComprar() {
+    var productos = Array.prototype.slice.call(document.querySelectorAll(".prod")).map(function (el) {
+      return {
+        nombre: el.getAttribute("data-nombre"),
+        precio: parseFloat(el.getAttribute("data-precio")),
+        qty: 0,
+        valor: el.querySelector(".qty-val"),
+        el: el
+      };
+    });
+    var formPedido = document.getElementById("pedido");
+    if (!productos.length || !formPedido) return;
 
-  if (productos.length && formPedido) {
     var resumen = document.getElementById("resumen");
     var avisoPedido = document.getElementById("aviso-pedido");
     var errorPedido = document.getElementById("error-pedido");
@@ -121,8 +124,9 @@
   }
 
   /* ---- PAGINA CONTACTO ---- */
-  var formContacto = document.getElementById("form-contacto");
-  if (formContacto) {
+  function iniciarContacto() {
+    var formContacto = document.getElementById("form-contacto");
+    if (!formContacto) return;
     var errorC = document.getElementById("error-contacto");
     formContacto.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -136,4 +140,92 @@
       window.open(enlaceWhatsApp("Hola Encarna, soy " + nombre + ". " + mensaje), "_blank", "noopener");
     });
   }
+
+  function iniciarPagina() {
+    hidratarConfig();
+    iniciarComprar();
+    iniciarContacto();
+  }
+  iniciarPagina();
+
+  /* ==========================================================
+     NAVEGACION SUAVE
+     Al pulsar un enlace interno solo se cambia la parte central:
+     las imagenes de las esquinas, el menu y la banda roja NO se
+     vuelven a cargar. Cada seccion sigue teniendo su propia URL
+     (Google y los enlaces compartidos funcionan igual), y si algo
+     falla se carga la pagina de forma normal.
+     ========================================================== */
+  if (location.protocol === "file:" || !window.fetch || !window.history.pushState) return;
+
+  var cache = {};
+  function traer(url) {
+    if (!cache[url]) {
+      cache[url] = fetch(url, { credentials: "same-origin" }).then(function (r) {
+        if (!r.ok) throw new Error("http " + r.status);
+        return r.text();
+      });
+      cache[url].catch(function () { delete cache[url]; });
+    }
+    return cache[url];
+  }
+
+  function esInterno(a) {
+    if (!a || a.target || a.hasAttribute("download")) return false;
+    if (a.origin !== location.origin) return false;
+    if (!/(\.html|\/)$/.test(a.pathname)) return false;
+    if (a.pathname === location.pathname && a.hash) return false;
+    return true;
+  }
+
+  function copiarMeta(doc, selector, atributo) {
+    var nuevo = doc.querySelector(selector), actual = document.querySelector(selector);
+    if (nuevo && actual) actual.setAttribute(atributo, nuevo.getAttribute(atributo));
+  }
+
+  function ir(url, empujar) {
+    traer(url).then(function (html) {
+      var doc = new DOMParser().parseFromString(html, "text/html");
+      var nuevo = doc.querySelector("main"), viejo = document.querySelector("main");
+      var nav = doc.querySelector(".nav"), navViejo = document.querySelector(".nav");
+      if (!nuevo || !viejo || !nav || !navViejo) throw new Error("estructura");
+
+      document.title = doc.title;
+      copiarMeta(doc, 'meta[name="description"]', "content");
+      copiarMeta(doc, 'link[rel="canonical"]', "href");
+
+      nuevo = document.importNode(nuevo, true);
+      nuevo.classList.add("aparece");
+      viejo.replaceWith(nuevo);
+      navViejo.replaceWith(document.importNode(nav, true));
+
+      if (empujar) history.pushState({}, "", url);
+      window.scrollTo(0, 0);
+      iniciarPagina();
+      nuevo.setAttribute("tabindex", "-1");
+      nuevo.focus({ preventScroll: true });
+    }).catch(function () {
+      location.href = url;   // plan B: carga normal
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest("a");
+    if (!esInterno(a)) return;
+    e.preventDefault();
+    if (a.href === location.href) return;
+    ir(a.href, true);
+  });
+
+  // Precarga la pagina al pasar el raton o tocar, para que el cambio sea instantaneo
+  function precargar(e) {
+    var a = e.target.closest && e.target.closest("a");
+    if (esInterno(a)) traer(a.href).catch(function () {});
+  }
+  document.addEventListener("mouseover", precargar);
+  document.addEventListener("touchstart", precargar, { passive: true });
+  document.addEventListener("focusin", precargar);
+
+  window.addEventListener("popstate", function () { ir(location.href, false); });
 })();

@@ -11,9 +11,9 @@ CARPETAS
 
 ANTES DE NADA: PON TUS FOTOS en la carpeta img/ con estos nombres exactos:
   img/tomate.jpg   (foto del tarro con tomates)
-  img/abuela.jpg   (foto de Encarna)
+  img/abuela.png   (foto de Encarna)
 Consejo de velocidad: que tomate.jpg pese menos de 200 KB (unos 1000 px de ancho)
-y abuela.jpg menos de 60 KB (unos 420 px de ancho).
+y abuela.png menos de 60 KB (unos 420 px de ancho).
 
 COMO PROBARLO EN TU ORDENADOR
   Opcion rapida: doble clic en index.html.
@@ -38,3 +38,9 @@ PUBLICAR EN GITHUB PAGES
   1) Crea un repositorio en GitHub y sube TODO el contenido de esta carpeta.
   2) Settings -> Pages -> "Deploy from a branch" -> rama main, carpeta / (root) -> Save.
   3) En un par de minutos tendras la web en https://TU-USUARIO.github.io/TU-REPO/
+
+NAVEGACION SUAVE
+  Al pulsar el menu solo cambia el contenido central; las imagenes de las esquinas, el menu
+  y la banda roja no se recargan. Cada seccion sigue teniendo su propia URL (para Google y
+  para compartir). Si abres index.html con doble clic (file://) se usa la carga normal;
+  con "py -m http.server 8000" o ya publicada en GitHub Pages funciona la navegacion suave.
